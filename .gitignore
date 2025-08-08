@@ -1,0 +1,8 @@
+compile_commands.json
+build
+application_data
+doc
+report
+*.tar.gz
+install
+.cache
