@@ -3,6 +3,6 @@ build
 application_data
 doc
 report
-*.tar.gz
+dist
 install
 .cache

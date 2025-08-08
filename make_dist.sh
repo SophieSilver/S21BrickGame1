@@ -2,7 +2,7 @@
 
 # cd into repo root
 SCRIPT_DIR=$(realpath $(dirname $0))
-cd $SCRIPT_DIR/..
+cd $SCRIPT_DIR
 
 # copy all git tracked files
 git ls-files | xargs -i dirname {} | xargs -i mkdir -p dist/$1/{}
