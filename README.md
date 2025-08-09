@@ -42,3 +42,6 @@ Directory structure was altered a bit. The original assignment wanted to have th
 in the src directory. Here it was moved into the project root as I feel like that makes more sense.
 
 Parts of the code were reworked slightly, compared to the original submission.
+
+## Documentation
+Documentaiton is available at https://sophiesilver.github.io/S21BrickGame1/
