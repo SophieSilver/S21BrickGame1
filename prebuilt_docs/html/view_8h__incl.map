@@ -1,0 +1,11 @@
+<map id="src/gui/cli/view.h" name="src/gui/cli/view.h">
+<area shape="rect" id="Node000001" title="The CLI View." alt="" coords="83,5,214,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,86,89,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,33,75,79,72,75,132,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="113,86,184,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,31,151,72,146,72,146,31"/>
+<area shape="rect" id="Node000004" href="$brick__game_8h.html" title="Main interface between the game logic and the GUI." alt="" coords="208,79,367,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="170,29,244,70,241,74,168,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="246,167,329,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="290,119,290,153,285,153,285,119"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="CliController" name="CliController">
+<area shape="rect" id="Node000001" title="CLI Controller." alt="" coords="49,93,152,119"/>
+<area shape="rect" id="Node000002" href="$structGameInfo.html" title="Information about the current state of the game." alt="" coords="5,5,92,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,44,52,68,63,81,77,91,73,95,59,85,48,70,42,45"/>
+<area shape="rect" id="Node000003" href="$structCliView.html" title="CLI View responsible for rendering the game information to the screen." alt="" coords="117,5,188,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,44,126,71,111,94,106,92,121,68,137,42"/>
+</map>
