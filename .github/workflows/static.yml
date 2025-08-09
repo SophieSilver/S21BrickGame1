@@ -36,7 +36,7 @@ jobs:
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: >
-            doxygen
+            doxygen graphviz
           version: 1.0
       - name: Build Docs
         run: |
