@@ -30,6 +30,11 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: >
+            doxygen
+          version: 1.0
       - name: Build Docs
         run: |
           make doc
