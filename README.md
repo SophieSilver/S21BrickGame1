@@ -41,4 +41,4 @@ All School 21 owned materials, such as task specifications, were removed.
 Directory structure was altered a bit. The original assignment wanted to have the Makefile
 in the src directory. Here it was moved into the project root as I feel like that makes more sense.
 
-Parts of the code were reworked slightly. The interface between the library
+Parts of the code were reworked slightly, compared to the original submission.
