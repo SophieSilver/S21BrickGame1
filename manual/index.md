@@ -24,7 +24,7 @@ The diagram of all the states and possible transitions can be found below.
 
 ![FSM diagram](FSM_transparent.svg){html: width=750px}
 
-The states are more thoroughly described in @ref GameState
+The states are more thoroughly described in @ref GameState.
 
 ### CLI
 
