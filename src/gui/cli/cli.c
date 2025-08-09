@@ -5,14 +5,18 @@
 #include <threads.h>
 #include <time.h>
 
+#include "view.h"
+
 /// How many milliseconds a frame lasts
 #define FRAME_MS ((long)50)
 
 CliController cli_controller_create(void) {
-    CliController controller;
-    controller.game_info = (GameInfo_t) {0};
-    controller.running = true;
-    controller.view = cli_view_create();
+    CliController controller = {
+        .game_info = (GameInfo) {0},
+        .game_instance = game_instance_create(),
+        .running = true,
+        .view = cli_view_create(),
+    };
 
     srand((unsigned int)time(NULL));
 
@@ -21,6 +25,7 @@ CliController cli_controller_create(void) {
 
 void cli_controller_destroy(CliController controller) {
     cli_view_destroy(controller.view);
+    game_instance_destroy(controller.game_instance);
 }
 
 static inline void wait_for_frame(void) {
@@ -36,23 +41,23 @@ static inline void get_inputs(CliController *controller) {
 
     while (c != ERR) {
         if (c == '\n') {
-            userInput(Start, false);
+            user_input(controller->game_instance, Start);
         } else if (c == KEY_LEFT) {
-            userInput(Left, false);
+            user_input(controller->game_instance, Left);
         } else if (c == KEY_RIGHT) {
-            userInput(Right, false);
+            user_input(controller->game_instance, Right);
         } else if (c == KEY_UP) {
-            userInput(Up, false);
+            user_input(controller->game_instance, Up);
         } else if (c == KEY_DOWN) {
-            userInput(Down, false);
+            user_input(controller->game_instance, Down);
         } else if (c == ' ') {
-            userInput(Action, false);
+            user_input(controller->game_instance, Action);
         } else if (c == 'p' || c == 'P') {
-            userInput(Pause, false);
+            user_input(controller->game_instance, Pause);
         } else if (c == 'q' || c == 'Q') {
-            userInput(Terminate, false);
+            user_input(controller->game_instance, Terminate);
 
-            if (controller->game_info.pause == START_SCREEN) {
+            if (controller->game_info.status == GAME_STATUS_START) {
                 controller->running = false;
             }
         }
@@ -65,7 +70,7 @@ void cli_controller_run_main_loop(CliController *controller) {
     while (controller->running) {
         wait_for_frame();
         get_inputs(controller);
-        controller->game_info = updateCurrentState();
+        controller->game_info = update_current_state(controller->game_instance);
         cli_view_update(&controller->view, controller->game_info);
     }
 }

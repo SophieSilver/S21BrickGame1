@@ -125,10 +125,10 @@ test_sanitize:
 	@$(MAKE) test
 
 clang_format_check:
-	clang-format -n --style=file:../.clang-format $(HEADERS) $(ALL_SRCS)
+	clang-format -n $(HEADERS) $(ALL_SRCS)
 
 clang_format:
-	clang-format -i --style=file:../.clang-format $(HEADERS) $(ALL_SRCS)
+	clang-format -i $(HEADERS) $(ALL_SRCS)
 
 cppcheck:
 	cppcheck --enable=all --std=c11 --check-level=exhaustive \

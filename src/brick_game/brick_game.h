@@ -10,14 +10,12 @@ extern "C" {
 
 #include <stdbool.h>
 
-// The provided interface does not include variables for game state, like
-// paused, start, game-over, etc.
-// So we stuff these values into the `pause` field
-
-#define RUNNING 0
-#define PAUSED 1
-#define GAME_OVER_SCREEN 2
-#define START_SCREEN 3
+typedef enum GameStatus {
+    GAME_STATUS_RUNNING,
+    GAME_STATUS_PAUSED,
+    GAME_STATUS_GAME_OVER,
+    GAME_STATUS_START,
+} GameStatus;
 
 #define FIELD_ROWS 20
 #define FIELD_COLS 10
@@ -42,7 +40,7 @@ typedef enum UserAction {
     Down,
     /// Action button
     Action
-} UserAction_t;
+} UserAction;
 
 /// Information about the current state of the game.
 typedef struct GameInfo {
@@ -60,29 +58,35 @@ typedef struct GameInfo {
     int level;
     /// The current speed of the game, 1 - 10
     int speed;
-    /// The pause state of the game.
+    /// The status of the game.
     ///
-    /// One of:
-    /// - 0 = @ref RUNNING
-    /// - 1 = @ref PAUSED
-    /// - 2 = @ref GAME_OVER_SCREEN
-    /// - 3 = @ref START_SCREEN
-    int pause;
-} GameInfo_t;
+    /// @see GameStatus
+    GameStatus status;
+} GameInfo;
+
+/// Opaque structure containing the instance of the game data.
+struct GameInstance;
+typedef struct GameInstance GameInstance;
+
+/// Create a new @ref GameInstance.
+GameInstance *game_instance_create(void);
+
+/// Destroy a @ref GameInstance and release its resources.
+void game_instance_destroy(GameInstance *instance);
 
 /// Register a user input.
 ///
 /// @param action --- User input to register
 ///
-/// @param hold --- Whether the input should be pressed once or held down
-/// continuously. If `true`, the input will be considered held down until a call
-/// to @ref userInput with the same action and `hold` = `false` is received.
-void userInput(UserAction_t action, bool hold);
+/// @memberof GameInstance
+void user_input(GameInstance *instance, UserAction action);
 
 /// Advance the game state by one frame.
 ///
 /// @return Information about the current state of the game.
-GameInfo_t updateCurrentState(void);
+///
+/// @memberof GameInstance
+GameInfo update_current_state(GameInstance *instance);
 
 #ifdef __cplusplus
 }

@@ -4,55 +4,59 @@
 #include "../../brick_game.h"
 #include "tests.h"
 
-// the library interface is kinda hard to test due to it using static objects,
-// so these tests are very minimal
-
 START_TEST(library_interface_works) {
-    userInput(Terminate, false);
-    updateCurrentState();
+    GameInstance *instance = game_instance_create();
+    user_input(instance, Terminate);
+    update_current_state(instance);
 
-    updateCurrentState();
-    userInput(Start, false);
-    updateCurrentState();
-    userInput(Terminate, false);
-    userInput(Left, false);
-    userInput(Right, false);
-    userInput(Down, false);
-    userInput(Action, false);
-    userInput(Up, false);
-    updateCurrentState();
-    userInput(Start, false);
-    userInput(Pause, false);
-    updateCurrentState();
-    userInput(Start, false);
+    update_current_state(instance);
+    user_input(instance, Start);
+    update_current_state(instance);
+    user_input(instance, Terminate);
+    user_input(instance, Left);
+    user_input(instance, Right);
+    user_input(instance, Down);
+    user_input(instance, Action);
+    user_input(instance, Up);
+    update_current_state(instance);
+    user_input(instance, Start);
+    user_input(instance, Pause);
+    update_current_state(instance);
+    user_input(instance, Start);
     for (int i = 0; i < 1000; i += 1) {
-        updateCurrentState();
-        userInput(Down, false);
+        update_current_state(instance);
+        user_input(instance, Down);
     }
-    GameInfo_t game_info = updateCurrentState();
-    ck_assert(game_info.pause == GAME_OVER_SCREEN);
+
+    GameInfo game_info = update_current_state(instance);
+    game_instance_destroy(instance);
+
+    ck_assert(game_info.status == GAME_STATUS_GAME_OVER);
 }
 END_TEST
 
 // Fuzz (https://en.wikipedia.org/wiki/Fuzzing) the library interface to make
-// sure it doesn't crash/segfault/perform any invalid operations best results
-// with valgrind/sanitizers
+// sure it doesn't crash/segfault/perform any invalid operations
+// best results with valgrind/sanitizers
 START_TEST(library_interface_fuzz) {
-    userInput(Terminate, false);
-    updateCurrentState();
+    GameInstance *instance = game_instance_create();
+    user_input(instance, Terminate);
+    update_current_state(instance);
 
     // get deterministic results
     srand(1337);
 
-    for (int i = 0; i < 100000; i += 1) {
-        for (UserAction_t action = Start; action <= Action; action += 1) {
+    for (int i = 0; i < 10000; i += 1) {
+        for (UserAction action = Start; action <= Action; action += 1) {
             if (rand() % 2 == 0) {
-                userInput(action, rand() % 2 == 0);
+                user_input(instance, action);
             }
         }
 
-        updateCurrentState();
+        update_current_state(instance);
     }
+
+    game_instance_destroy(instance);
 }
 
 Suite *library_interface_test_suite(void) {

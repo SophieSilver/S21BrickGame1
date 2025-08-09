@@ -32,12 +32,6 @@ static inline void handle_terminating(GameData *game_data) {
     }
 }
 
-static inline void restore_held_inputs(GameData *game_data) {
-    game_data->inputs.left |= game_data->held_inputs.left;
-    game_data->inputs.right |= game_data->held_inputs.right;
-    game_data->inputs.down |= game_data->held_inputs.down;
-}
-
 static inline void handle_state(GameData *game_data) {
     switch (game_data->state) {
         case START:
@@ -75,7 +69,7 @@ void update_game_data(GameData *game_data) {
         game_data->top_score = load_top_score();
         game_data->top_score_loaded = true;
     }
-    restore_held_inputs(game_data);
+
     handle_pausing(game_data);
 
     if (!game_data->paused) {

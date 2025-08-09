@@ -17,10 +17,13 @@ typedef struct {
     /// Information about the game.
     ///
     /// This is the "model" that is being rendered.
-    GameInfo_t game_info;
+    GameInfo game_info;
 
     /// CLI View that is responsible for rendering @ref game_info.
     CliView view;
+
+    /// An instance of the game data
+    GameInstance *game_instance;
 
     /// Flag, signifying if the controller should continue running the main loop,
     /// or exit.

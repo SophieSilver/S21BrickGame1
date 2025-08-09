@@ -113,7 +113,7 @@ typedef struct {
 } FilledLines;
 
 /// A structure containing all data about the current game session.
-typedef struct {
+typedef struct GameData {
     /// Current state of the game's state machine.
     GameState state;
 
@@ -155,12 +155,6 @@ typedef struct {
 
     /// Inputs that are being pressed this frame.
     Inputs inputs;
-
-    /// Inputs that are being held down this frame.
-    ///
-    /// When held, `left`, `down`, and `up` will be re-triggered on each frame.
-    /// Other held inputs are ignored.
-    Inputs held_inputs;
 
     /// Indicates if the game is currently paused.
     bool paused;

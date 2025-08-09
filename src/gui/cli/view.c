@@ -178,16 +178,16 @@ static inline void draw_speed_win(CliView *view, int speed) {
     mvwprintw(view->speed_win, 2, 7, "%02d", speed);
 }
 
-static inline void draw_side_win(CliView *view, GameInfo_t game_info) {
+static inline void draw_side_win(CliView *view, GameInfo game_info) {
     draw_top_score_win(view, game_info.high_score);
 
-    if (game_info.pause != START_SCREEN) {
+    if (game_info.status != GAME_STATUS_START) {
         draw_score_win(view, game_info.score);
     }
-    if (!game_info.pause) {
+    if (game_info.status == GAME_STATUS_RUNNING) {
         draw_next_win(view, game_info.next);
     }
-    if (game_info.pause != START_SCREEN) {
+    if (game_info.status != GAME_STATUS_START) {
         draw_level_win(view, game_info.level);
         draw_speed_win(view, game_info.speed);
     }
@@ -216,18 +216,23 @@ static inline void draw_pause_screen(CliView *view) {
     draw_menu_screen(view, view->pause_win, (char *[]) {"PAUSED"}, 1);
 }
 
-static inline void draw_menu(CliView *view, GameInfo_t game_info) {
-    int pause = game_info.pause;
-    if (!pause) {
-        return;
-    }
+static inline void draw_menu(CliView *view, GameInfo game_info) {
+    switch (game_info.status) {
+        case GAME_STATUS_RUNNING:
+            return;
 
-    if (pause == START_SCREEN) {
-        draw_start_screen(view);
-    } else if (pause == GAME_OVER_SCREEN) {
-        draw_game_over_screen(view);
-    } else {
-        draw_pause_screen(view);
+        case GAME_STATUS_START:
+            draw_start_screen(view);
+            break;
+
+        case GAME_STATUS_GAME_OVER:
+            draw_game_over_screen(view);
+            break;
+
+        case GAME_STATUS_PAUSED:
+            draw_pause_screen(view);
+            break;
+            ;
     }
 }
 
@@ -246,9 +251,9 @@ static inline void draw_controls(CliView *view) {
     );
 }
 
-static inline void draw_view(CliView *view, GameInfo_t game_info) {
+static inline void draw_view(CliView *view, GameInfo game_info) {
     draw_field_decorations(view);
-    if (!game_info.pause || game_info.pause == GAME_OVER_SCREEN) {
+    if (game_info.status == GAME_STATUS_RUNNING || game_info.status == GAME_STATUS_GAME_OVER) {
         draw_field_blocks(view, game_info.field);
     }
 
@@ -258,7 +263,7 @@ static inline void draw_view(CliView *view, GameInfo_t game_info) {
     draw_controls(view);
 }
 
-void cli_view_update(CliView *view, GameInfo_t game_info) {
+void cli_view_update(CliView *view, GameInfo game_info) {
     erase();
 
     draw_view(view, game_info);

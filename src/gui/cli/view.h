@@ -37,7 +37,7 @@ CliView cli_view_create(void);
 /// Rerender the view with the new model.
 ///
 /// @memberof CliView
-void cli_view_update(CliView *view, GameInfo_t game_info);
+void cli_view_update(CliView *view, GameInfo game_info);
 
 /// Destroy the CLI View.
 ///
